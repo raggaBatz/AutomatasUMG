@@ -1,0 +1,5 @@
+Q:{A,B,C,D}
+F:{a,b}
+i:A
+A:{D}
+W:{(A,a,A);(A,b,B);(B,a,C);(B,b,B);(C,a,D);(C,b,B);(D,a,A);(D,d,B);}
