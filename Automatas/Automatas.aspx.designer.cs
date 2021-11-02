@@ -123,6 +123,15 @@ namespace Automatas
         protected global::System.Web.UI.WebControls.GridView GridViewAFD;
 
         /// <summary>
+        /// taQuintupla control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea taQuintupla;
+
+        /// <summary>
         /// tbxCadena control.
         /// </summary>
         /// <remarks>
@@ -130,5 +139,14 @@ namespace Automatas
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbxCadena;
+
+        /// <summary>
+        /// btnValidarCadena control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnValidarCadena;
     }
 }

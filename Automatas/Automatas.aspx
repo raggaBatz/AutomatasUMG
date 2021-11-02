@@ -87,33 +87,33 @@
                                 <i class="fa fa-wikipedia-w"></i>
                                 <label>W = AFD</label>
                                 <asp:Panel ID="panel2" runat="server" Height="285px" ScrollBars="Vertical">
-                                    <%--<asp:GridView ID="GridViewAFD" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="True" DataKeyNames="ESTADO" EmptyDataText="There are no data records to display.">
-                                        <HeaderStyle CssClass="thead-custom"/>
-                                    </asp:GridView>--%>
-                                    <asp:GridView ID="GridViewAFD" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="True" DataKeyNames="N" EmptyDataText="There are no data records to display.">
+                                    <asp:GridView ID="GridViewAFD" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="True" DataKeyNames="ESTADO" EmptyDataText="There are no data records to display.">
                                         <HeaderStyle CssClass="thead-custom"/>
                                     </asp:GridView>
+                                    <%--<asp:GridView ID="GridViewAFD" runat="server" Width="100%" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="True" DataKeyNames="N" EmptyDataText="There are no data records to display.">
+                                        <HeaderStyle CssClass="thead-custom"/>
+                                    </asp:GridView>--%>
                                 </asp:Panel>
                             </div>
                         </div>
-                        <%--<div class="col-sm-2">
+                        <div class="col-sm-2">
                             <div class="md-form">
                                 <i class="fa fa-file-o"></i>
                                 <label>Quintupla</label>
                                 <textarea id="taQuintupla" runat="server" class="md-textarea form-control" rows="10" readonly="readonly"></textarea>
                             </div>
-                        </div>--%>
+                        </div>
                         <div class="col-sm-2">
                             <div class="md-form">
                                 <asp:TextBox ID="tbxCadena" runat="server" CssClass="form-control input-lg" Width="100%" TabIndex="1" placeholder="Cadena"/>
                             </div>
                         </div>
-                        <%--<div class="col-sm-3">
+                        <div class="col-sm-3">
                             <div class="md-form">
                                 <label>.</label>
-                                <button type="button" class="btn btn-info" id="btnValidarCadena" runat="server" onserverclick="btnValidarCadena_Click">Validar cadena</button>
+                                <button type="button" class="btn btn-warning" id="btnValidarCadena" runat="server" onserverclick="btnValidarCadena_Click">Validar cadena</button>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
 
                 </form>

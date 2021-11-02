@@ -57,7 +57,8 @@ namespace Automatas
             cadenaQ = cadenaQ.Substring((cadenaQ.IndexOf("{") + 1), cadenaQ.IndexOf("}") - (cadenaQ.IndexOf("{") + 1));
             cadenaF = cadenaF.Substring((cadenaF.IndexOf("{") + 1), cadenaF.IndexOf("}") - (cadenaF.IndexOf("{") + 1));
             cadenaI = cadenaI.Substring(cadenaI.IndexOf(":") + 1, 1);
-            cadenaA = cadenaA.Substring((cadenaA.IndexOf("{") + 1), cadenaA.IndexOf("}") - (cadenaA.IndexOf("{") + 1));
+            cadenaA = cadenaA.Substring(cadenaA.IndexOf(":") + 1, 1);
+            //cadenaA = cadenaA.Substring((cadenaA.IndexOf("{") + 1), cadenaA.IndexOf("}") - (cadenaA.IndexOf("{") + 1));
             cadenaW = cadenaW.Substring((cadenaW.IndexOf("{") + 1), cadenaW.IndexOf("}") - (cadenaW.IndexOf("{") + 1));
             //se convierten las cadenas de valores en arreglos
             String[] arregloQ = cadenaQ.Split(',');
@@ -93,11 +94,11 @@ namespace Automatas
             GridViewAFN.DataBind();
             //Se llena tabla AFD
             DataTable tablaAFD = new DataTable();
-            //tablaAFD = generarAFD(tablaAFN, cadenaI, arregloF, banderaEpsilon);
-            GridViewAFD.DataSource = tablaAFN;
+            tablaAFD = generarAFD(tablaAFN, cadenaI, arregloF, banderaEpsilon);
+            GridViewAFD.DataSource = tablaAFD;
             GridViewAFD.DataBind();
             //Se arma quintupla
-            //armarQuintuplaAFD(A, AFD);
+            armarQuintuplaAFD(cadenaA, tablaAFD);
             //Session["GlobalAFD"] = AFD;
 
         }
@@ -331,6 +332,99 @@ namespace Automatas
             else
             {
                 return text;
+            }
+        }
+        private void armarQuintuplaAFD(String aceptacion, DataTable AFD)
+        {
+            String i = "";
+            String F = "";
+            String Q = "";
+            String A = "";
+
+            //aceptacion = aceptacion.Substring((aceptacion.IndexOf("{") + 1), aceptacion.IndexOf("}") - (aceptacion.IndexOf("{") + 1));
+            String[] aceptacionArray = aceptacion.Split(',');
+            foreach (DataColumn column in AFD.Columns)
+            {
+                if (!column.ColumnName.Equals("ESTADO") && !column.ColumnName.Equals("COMPOSICION"))
+                    if (F.Equals(""))
+                        F = column.ColumnName;
+                    else
+                        F += "," + column.ColumnName;
+
+            }
+            foreach (DataRow row in AFD.Rows)
+            {
+                if (Q.Equals(""))
+                    Q += row["ESTADO"];
+                else
+                    Q += "," + row["ESTADO"];
+                foreach (String estado in aceptacionArray)
+                {
+                    String[] composicion = row["COMPOSICION"].ToString().Split(',');
+                    foreach (String elemento in composicion)
+                    {
+                        if (estado.Equals(elemento))
+                        {
+                            if (A.Equals(""))
+                                A += row["ESTADO"];
+                            else
+                                A += "," + row["ESTADO"];
+                        }
+                    };
+                }
+
+            }
+
+            Session["A"] = A;
+            i = String.Format("i={0}", AFD.Rows[0][0]);
+            F = String.Format("F={{{0}}}", F);
+            Q = String.Format("Q={{{0}}}", Q);
+            A = String.Format("A={{{0}}}", A);
+            taQuintupla.InnerText += Q + Environment.NewLine;
+            taQuintupla.InnerText += F + Environment.NewLine;
+            taQuintupla.InnerText += i + Environment.NewLine;
+            taQuintupla.InnerText += A + Environment.NewLine;
+        }
+
+        protected void btnValidarCadena_Click(object sender, EventArgs e)
+        {
+            if (!tbxCadena.Text.Equals(""))
+            {
+                String val = "";
+                DataTable GlobalAFD = new DataTable();
+                GlobalAFD = (DataTable)Session["GlobalAFD"];
+                val = GlobalAFD.Rows[0][0].ToString();
+                foreach (char ch in tbxCadena.Text.ToCharArray())
+                {
+                    String l = String.Format(ch.ToString());
+                    //bool flag = false;
+                    foreach (DataRow row in GlobalAFD.Rows)
+                    {
+                        //if (!flag) {
+                        //val = row[l].ToString();
+                        //flag = true;
+                        //}
+                        //else 
+                        //{
+                        if (row["Estado"].ToString().Equals(val))
+                        {
+                            val = row[l].ToString();
+                            break;
+                        }
+                        //}
+                    }
+                }
+                String aceptacion = (String)Session["A"];
+                if (aceptacion.Contains(val))
+                {
+                    string script = String.Format("alert(\"{0} - Si es cadena de aceptacion!!!\");", tbxCadena.Text);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ServerControlScript", script, true);
+                }
+                else
+                {
+                    string script = String.Format("alert(\"{0} no es cadena de aceptacion\");", tbxCadena.Text);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ServerControlScript", script, true);
+                }
             }
         }
     }
